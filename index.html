@@ -17,7 +17,6 @@
             overflow: hidden;
             flex-direction: column;
             transition: background-color 1s ease-in-out;
-            padding: 0;
             margin: 0;
         }
         
@@ -26,17 +25,17 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            width: 100%;
-            height: 100%;
+            width: 100vw;
+            height: 100vh;
         }
         
         .envelope {
-            width: 50vw;
+            width: 60vw;
             max-width: 300px;
             height: auto;
             position: relative;
             animation: bounce 1.5s infinite;
-            z-index: 2;
+            z-index: 1;
             cursor: pointer;
             transition: opacity 0.5s ease-in-out, transform 0.8s ease-in-out;
         }
@@ -44,30 +43,30 @@
         .envelope img {
             width: 100%;
             height: auto;
+            object-fit: contain;
         }
         
         @keyframes bounce {
             0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
+            50% { transform: translateY(-15px); }
         }
         
         .hidden-content {
             display: none;
-            width: 100%;
-            height: 100%;
-            min-height: 100vh;
-            background: url('bg.jpg') no-repeat center center;
-            background-size: contain;
+            width: 100vw;
+            height: 100vh;
+            background-color: #ff99cc;
             align-items: center;
-            justify-content: flex-start;
+            justify-content: flex-start; /* Align content to the top */
             flex-direction: column;
             position: relative;
             overflow: hidden;
-            padding-top: 8vh;
+            padding-top: 10vh; /* Space at the top */
+            text-align: center;
         }
         
         .valentine-text {
-            font-size: 5vw;
+            font-size: 6vw;
             font-weight: bold;
             color: #ff0040;
             text-shadow: 0 0 15px rgba(255, 0, 64, 0.8);
@@ -78,22 +77,21 @@
             flex-direction: column;
             gap: 5px;
             position: relative;
-            z-index: 3;
+            margin-top: 10vh; /* Move text higher up */
         }
         
         .counter-container {
-            margin-top: 5vh;
+            margin-top: 5vh; /* Adjust spacing */
             text-align: center;
             font-family: 'Shadows Into Light', cursive;
             color: #ff0040;
             font-size: 4vw;
-            z-index: 3;
         }
 
         .counter-button {
-            margin-top: 10px;
-            padding: 2vw 4vw;
-            font-size: 3vw;
+            margin-top: 2vh;
+            padding: 2vh 4vw;
+            font-size: 4vw;
             font-family: 'Shadows Into Light', cursive;
             background-color: white;
             border: 2px solid #ff0040;
@@ -107,6 +105,58 @@
             background-color: #ff0040;
             color: white;
         }
+
+        /* Love Meter Styles */
+        .love-meter-container {
+            margin-top: 5vh; /* Space for the love meter */
+            text-align: center;
+        }
+
+        .loading-bar {
+            width: 50vw;
+            height: 20px;
+            background-color: #fff;
+            border: 2px solid #ff0040;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 2vh auto;
+            position: relative;
+        }
+
+        .loading-progress {
+            width: 0;
+            height: 100%;
+            background-color: #ff0040;
+            transition: width 2s ease-in-out;
+        }
+
+        .explosion {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-color: #ff0040;
+            opacity: 0;
+            animation: explode 0.5s ease-out forwards;
+        }
+
+        @keyframes explode {
+            0% { transform: scale(1); opacity: 1; }
+            100% { transform: scale(2); opacity: 0; }
+        }
+
+        /* Heart Particle Styles */
+        .heart-particle {
+            position: absolute;
+            width: 50px; /* Increased size */
+            height: 50px; /* Increased size */
+            animation: floatUp 4s ease-in forwards; /* Float upward and disappear */
+            pointer-events: none;
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(0) scale(1); opacity: 1; }
+            100% { transform: translateY(-100vh) scale(0.5); opacity: 0; } /* Float up and fade out */
+        }
     </style>
     <script>
         function openEnvelope() {
@@ -117,7 +167,22 @@
                 envelope.style.display = 'none';
                 newContent.style.display = 'flex';
                 gsap.to(".valentine-text", { duration: 2, opacity: 1, y: 20, ease: "power2.out" });
+                createHeartParticles();
             }, 1000);
+        }
+        
+        function createHeartParticles() {
+            setInterval(() => {
+                let heart = document.createElement("img");
+                let heartImages = ["heart1.png", "heart2.png", "heart3.png", "heart4.png", "heart5.png"];
+                heart.src = heartImages[Math.floor(Math.random() * heartImages.length)];
+                heart.classList.add("heart-particle");
+                heart.style.left = Math.random() * 100 + "vw"; // Random horizontal position
+                heart.style.top = "100vh"; // Start from the bottom of the screen
+                heart.style.animationDuration = (Math.random() * 3 + 4) + "s"; // Random animation speed
+                document.querySelector('.hidden-content').appendChild(heart);
+                setTimeout(() => { heart.remove(); }, 5000); // Remove heart after 5 seconds
+            }, 1000); // Reduced number of hearts by increasing interval
         }
         
         function startCounter() {
@@ -132,6 +197,19 @@
                 document.getElementById("time-counter").innerText = `${days}d ${hours}h ${minutes}m ${seconds}s`;
             }, 1000);
         }
+
+        function startLoveMeter() {
+            const loadingBar = document.querySelector('.loading-progress');
+            const explosion = document.querySelector('.explosion');
+            loadingBar.style.width = '100%'; // Fill the loading bar
+            setTimeout(() => {
+                explosion.style.opacity = 1; // Trigger explosion
+                setTimeout(() => {
+                    explosion.style.opacity = 0; // Hide explosion
+                    alert("Your love is overflowing! 💖"); // Show a message
+                }, 500);
+            }, 2000); // Wait for the bar to fill
+        }
     </script>
 </head>
 <body>
@@ -144,12 +222,20 @@
         <div class="valentine-text">
             <div>HAPPYYY VALENTINES</div>
             <div>SRNAAA</div>
-            <div>MY LOVEEE ❤️</div>
+            <div>MY LOVEEE</div>
         </div>
         <div class="counter-container">
-            <div>Wanna know how much time we spent together?</div>
-            <button class="counter-button" onclick="startCounter()">Time Together</button>
+            <div>Wanna know our time together?</div>
+            <button class="counter-button" onclick="startCounter()">click this to find out!</button>
             <div id="time-counter"></div>
+        </div>
+        <div class="love-meter-container">
+            <div>Check your love meter:</div>
+            <button class="counter-button" onclick="startLoveMeter()">Measure Love</button>
+            <div class="loading-bar">
+                <div class="loading-progress"></div>
+                <div class="explosion"></div>
+            </div>
         </div>
     </div>
 </body>
