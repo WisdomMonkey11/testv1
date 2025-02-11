@@ -9,15 +9,18 @@
         @import url('https://fonts.googleapis.com/css2?family=Shadows+Into+Light&display=swap');
         
         body {
-            background-color: pink;
+            margin: 0;
+            padding: 0;
             display: flex;
             align-items: center;
             justify-content: center;
             height: 100vh;
             overflow: hidden;
-            flex-direction: column;
-            transition: background-color 1s ease-in-out;
-            margin: 0;
+            background-color: #ffccf2; /* Pinkish background */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            transition: background-image 1s ease-in-out;
         }
         
         .content {
@@ -27,11 +30,12 @@
             justify-content: center;
             width: 100vw;
             height: 100vh;
+            position: relative;
         }
         
         .envelope {
-            width: 60vw;
-            max-width: 300px;
+            width: 50vw; /* Larger envelope */
+            max-width: 300px; /* Maximum size */
             height: auto;
             position: relative;
             animation: bounce 1.5s infinite;
@@ -55,19 +59,18 @@
             display: none;
             width: 100vw;
             height: 100vh;
-            background-color: #ff99cc;
             align-items: center;
-            justify-content: flex-start; /* Align content to the top */
+            justify-content: flex-start;
             flex-direction: column;
             position: relative;
             overflow: hidden;
-            padding-top: 5vh; /* Space at the top */
+            padding-top: 10vh;
             text-align: center;
         }
         
         .valentine-text {
-            font-size: 8vw; /* Larger text */
-            font-weight: bold; /* Bold text */
+            font-size: 8vw;
+            font-weight: bold;
             color: #ff0040;
             text-shadow: 0 0 15px rgba(255, 0, 64, 0.8);
             font-family: 'Shadows Into Light', cursive;
@@ -77,80 +80,84 @@
             flex-direction: column;
             gap: 5px;
             position: relative;
-            margin-top: 5vh; /* Position at the very top */
-        }
-        
-        .counter-container, .love-meter-container {
-            font-size: 5vw; /* Larger text */
-            font-family: 'Shadows Into Light', cursive; /* Uniform font */
-            color: #ff0040;
-            text-align: center;
             margin-top: 5vh;
         }
-
-        .counter-button {
-            margin-top: 2vh;
-            padding: 2vh 4vw;
-            font-size: 5vw; /* Larger text */
-            font-family: 'Shadows Into Light', cursive; /* Uniform font */
-            background-color: white;
-            border: 2px solid #ff0040;
-            color: #ff0040;
+        
+        .ui-container {
+            display: flex;
+            justify-content: space-between;
+            width: 80%; /* Adjusted width */
+            margin-top: 5vh;
+            gap: 5vw; /* Increased spacing between boxes */
+        }
+        
+        .counter-box, .love-meter-box {
+            background-color: #ff99cc; /* Pink box */
+            padding: 20px;
+            border-radius: 15px;
             cursor: pointer;
-            border-radius: 10px;
+            text-align: center;
+            width: 40%; /* Reduced width */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
             transition: all 0.3s ease;
         }
         
-        .counter-button:hover {
-            background-color: #ff0040;
-            color: white;
+        .counter-box:hover, .love-meter-box:hover {
+            transform: scale(1.05);
         }
-
-        /* Love Meter Styles */
-        .loading-bar {
-            width: 50vw;
-            height: 20px;
-            background-color: #fff;
-            border: 2px solid #ff0040;
-            border-radius: 10px;
-            overflow: hidden;
-            margin: 2vh auto;
-            position: relative;
+        
+        .counter-box h2, .love-meter-box h2 {
+            font-family: 'Shadows Into Light', cursive;
+            color: #ff0040;
+            font-size: 4vw;
+            margin: 0;
         }
-
-        .loading-progress {
-            width: 0;
-            height: 100%;
-            background-color: #ff0040;
-            transition: width 2s ease-in-out;
+        
+        .counter-details, .love-meter-details {
+            display: none;
+            margin-top: 10px;
+            font-family: 'Shadows Into Light', cursive;
+            color: #ff0040;
+            font-size: 4vw; /* Larger font size */
+            background: linear-gradient(135deg, #ff99cc, #ffc2d1); /* Gradient background */
+            border: 2px solid #ff0040; /* Border */
+            border-radius: 15px; /* Rounded corners */
+            padding: 20px; /* Increased padding */
+            box-shadow: 0 4px 15px rgba(255, 0, 64, 0.3); /* Shadow for depth */
+            animation: fadeIn 0.5s ease-in-out; /* Fade-in animation */
         }
-
-        .explosion {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background-color: #ff0040;
-            opacity: 0;
-            animation: explode 0.5s ease-out forwards;
+        
+        .counter-details div, .love-meter-details div {
+            margin: 10px 0; /* Increased margin for better spacing */
+            font-size: 4vw; /* Larger font size */
+            font-weight: bold;
+            color: #ff0040; /* Bright red color */
+            text-shadow: 0 0 10px rgba(255, 0, 64, 0.8); /* Glow effect */
+            transition: all 0.3s ease; /* Smooth transition for hover effects */
         }
-
-        @keyframes explode {
-            0% { transform: scale(1); opacity: 1; }
-            100% { transform: scale(2); opacity: 0; }
+        
+        .counter-details div:hover, .love-meter-details div:hover {
+            transform: scale(1.1); /* Slightly enlarge on hover */
+            color: #ff6699; /* Change color on hover */
         }
-
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
         /* Heart Particle Styles */
         .heart-particle {
             position: absolute;
-            width: 70px; /* Larger hearts */
-            height: 70px; /* Larger hearts */
-            animation: floatUp 6s ease-in forwards; /* Longer animation */
+            width: 70px;
+            height: 70px;
+            animation: floatUp 6s ease-in forwards;
             pointer-events: none;
         }
 
         @keyframes floatUp {
-            0% { transform: translateY(100vh) scale(1); opacity: 1; } /* Start from the bottom */
-            100% { transform: translateY(-100vh) scale(0.5); opacity: 0; } /* Fully rise and fade out */
+            0% { transform: translateY(100vh) scale(1); opacity: 1; }
+            100% { transform: translateY(-100vh) scale(0.5); opacity: 0; }
         }
     </style>
     <script>
@@ -161,6 +168,7 @@
             setTimeout(() => {
                 envelope.style.display = 'none';
                 newContent.style.display = 'flex';
+                document.body.style.backgroundImage = "url('bg3.jpg')"; // Change background image
                 gsap.to(".valentine-text", { duration: 2, opacity: 1, y: 20, ease: "power2.out" });
                 createHeartParticles();
             }, 1000);
@@ -172,12 +180,23 @@
                 let heartImages = ["heart1.png", "heart2.png", "heart3.png", "heart4.png", "heart5.png"];
                 heart.src = heartImages[Math.floor(Math.random() * heartImages.length)];
                 heart.classList.add("heart-particle");
-                heart.style.left = Math.random() * 100 + "vw"; // Random horizontal position
-                heart.style.top = "100vh"; // Start from the bottom of the screen
-                heart.style.animationDuration = (Math.random() * 4 + 6) + "s"; // Random animation speed (6-10 seconds)
+                heart.style.left = Math.random() * 100 + "vw";
+                heart.style.top = "100vh";
+                heart.style.animationDuration = (Math.random() * 4 + 6) + "s";
                 document.querySelector('.hidden-content').appendChild(heart);
-                setTimeout(() => { heart.remove(); }, 10000); // Remove heart after 10 seconds
-            }, 300); // More hearts by reducing interval
+                setTimeout(() => { heart.remove(); }, 10000);
+            }, 300);
+        }
+        
+        function toggleDropdown(element) {
+            const details = element.querySelector('.counter-details, .love-meter-details');
+            if (details.style.display === 'block') {
+                details.style.display = 'none';
+            } else {
+                details.style.display = 'block';
+                // Optional: Force reflow to restart animation
+                void details.offsetWidth;
+            }
         }
         
         function startCounter() {
@@ -185,25 +204,17 @@
             setInterval(() => {
                 const now = new Date().getTime();
                 const elapsed = now - startTime;
-                const days = Math.floor(elapsed / (1000 * 60 * 60 * 24));
+                const months = Math.floor(elapsed / (1000 * 60 * 60 * 24 * 30));
+                const days = Math.floor((elapsed % (1000 * 60 * 60 * 24 * 30)) / (1000 * 60 * 60 * 24));
                 const hours = Math.floor((elapsed % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
                 const minutes = Math.floor((elapsed % (1000 * 60 * 60)) / (1000 * 60));
                 const seconds = Math.floor((elapsed % (1000 * 60)) / 1000);
-                document.getElementById("time-counter").innerText = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+                document.getElementById("months").innerText = `${months} Months`;
+                document.getElementById("days").innerText = `${days} Days`;
+                document.getElementById("hours").innerText = `${hours} Hours`;
+                document.getElementById("minutes").innerText = `${minutes} Minutes`;
+                document.getElementById("seconds").innerText = `${seconds} Seconds`;
             }, 1000);
-        }
-
-        function startLoveMeter() {
-            const loadingBar = document.querySelector('.loading-progress');
-            const explosion = document.querySelector('.explosion');
-            loadingBar.style.width = '100%'; // Fill the loading bar
-            setTimeout(() => {
-                explosion.style.opacity = 1; // Trigger explosion
-                setTimeout(() => {
-                    explosion.style.opacity = 0; // Hide explosion
-                    alert("Your love is overflowing! 💖"); // Show a message
-                }, 500);
-            }, 2000); // Wait for the bar to fill
         }
     </script>
 </head>
@@ -219,19 +230,29 @@
             <div>SRNAAA</div>
             <div>MY LOVEEE</div>
         </div>
-        <div class="counter-container">
-            <div>Wanna know our time together?</div>
-            <button class="counter-button" onclick="startCounter()">click this to find out!</button>
-            <div id="time-counter"></div>
-        </div>
-        <div class="love-meter-container">
-            <div>Check your love meter:</div>
-            <button class="counter-button" onclick="startLoveMeter()">Measure Love</button>
-            <div class="loading-bar">
-                <div class="loading-progress"></div>
-                <div class="explosion"></div>
+        <div class="ui-container">
+            <!-- Time Together Counter -->
+            <div class="counter-box" onclick="toggleDropdown(this)">
+                <h2>Our Time Together</h2>
+                <div class="counter-details">
+                    <div id="months">0 Months</div>
+                    <div id="days">0 Days</div>
+                    <div id="hours">0 Hours</div>
+                    <div id="minutes">0 Minutes</div>
+                    <div id="seconds">0 Seconds</div>
+                </div>
+            </div>
+            <!-- Love Meter Placeholder -->
+            <div class="love-meter-box" onclick="toggleDropdown(this)">
+                <h2>Love Meter</h2>
+                <div class="love-meter-details">
+                    <div>Coming Soon!</div>
+                </div>
             </div>
         </div>
     </div>
+    <script>
+        startCounter(); // Start the counter automatically
+    </script>
 </body>
 </html>
