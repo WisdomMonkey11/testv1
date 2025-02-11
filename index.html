@@ -71,8 +71,8 @@
         .valentine-text {
             font-size: 8vw;
             font-weight: bold;
-            color: #ff0040;
-            text-shadow: 0 0 15px rgba(255, 0, 64, 0.8);
+            color: #ff3366; /* Adjusted text color */
+            text-shadow: 0 0 15px rgba(255, 51, 102, 0.8); /* Adjusted shadow */
             font-family: 'Shadows Into Light', cursive;
             text-align: center;
             opacity: 0;
@@ -108,7 +108,7 @@
         
         .counter-box h2, .love-meter-box h2 {
             font-family: 'Shadows Into Light', cursive;
-            color: #ff0040;
+            color: #ff3366; /* Adjusted text color */
             font-size: 4vw;
             margin: 0;
         }
@@ -117,13 +117,12 @@
             display: none;
             margin-top: 10px;
             font-family: 'Shadows Into Light', cursive;
-            color: #ff0040;
+            color: #ff3366; /* Adjusted text color */
             font-size: 4vw; /* Larger font size */
-            background: linear-gradient(135deg, #ff99cc, #ffc2d1); /* Gradient background */
-            border: 2px solid #ff0040; /* Border */
+            background-color: #ffc2d1; /* Lighter pink background */
             border-radius: 15px; /* Rounded corners */
             padding: 20px; /* Increased padding */
-            box-shadow: 0 4px 15px rgba(255, 0, 64, 0.3); /* Shadow for depth */
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Subtle shadow */
             animation: fadeIn 0.5s ease-in-out; /* Fade-in animation */
         }
         
@@ -131,8 +130,8 @@
             margin: 10px 0; /* Increased margin for better spacing */
             font-size: 4vw; /* Larger font size */
             font-weight: bold;
-            color: #ff0040; /* Bright red color */
-            text-shadow: 0 0 10px rgba(255, 0, 64, 0.8); /* Glow effect */
+            color: #ff3366; /* Adjusted text color */
+            text-shadow: 0 0 10px rgba(255, 51, 102, 0.8); /* Adjusted shadow */
             transition: all 0.3s ease; /* Smooth transition for hover effects */
         }
         
@@ -160,63 +159,6 @@
             100% { transform: translateY(-100vh) scale(0.5); opacity: 0; }
         }
     </style>
-    <script>
-        function openEnvelope() {
-            let envelope = document.querySelector('.content');
-            let newContent = document.querySelector('.hidden-content');
-            envelope.style.animation = 'poof 1s forwards';
-            setTimeout(() => {
-                envelope.style.display = 'none';
-                newContent.style.display = 'flex';
-                document.body.style.backgroundImage = "url('bg3.jpg')"; // Change background image
-                gsap.to(".valentine-text", { duration: 2, opacity: 1, y: 20, ease: "power2.out" });
-                createHeartParticles();
-            }, 1000);
-        }
-        
-        function createHeartParticles() {
-            setInterval(() => {
-                let heart = document.createElement("img");
-                let heartImages = ["heart1.png", "heart2.png", "heart3.png", "heart4.png", "heart5.png"];
-                heart.src = heartImages[Math.floor(Math.random() * heartImages.length)];
-                heart.classList.add("heart-particle");
-                heart.style.left = Math.random() * 100 + "vw";
-                heart.style.top = "100vh";
-                heart.style.animationDuration = (Math.random() * 4 + 6) + "s";
-                document.querySelector('.hidden-content').appendChild(heart);
-                setTimeout(() => { heart.remove(); }, 10000);
-            }, 300);
-        }
-        
-        function toggleDropdown(element) {
-            const details = element.querySelector('.counter-details, .love-meter-details');
-            if (details.style.display === 'block') {
-                details.style.display = 'none';
-            } else {
-                details.style.display = 'block';
-                // Optional: Force reflow to restart animation
-                void details.offsetWidth;
-            }
-        }
-        
-        function startCounter() {
-            const startTime = new Date("September 9, 2024 14:31:00").getTime();
-            setInterval(() => {
-                const now = new Date().getTime();
-                const elapsed = now - startTime;
-                const months = Math.floor(elapsed / (1000 * 60 * 60 * 24 * 30));
-                const days = Math.floor((elapsed % (1000 * 60 * 60 * 24 * 30)) / (1000 * 60 * 60 * 24));
-                const hours = Math.floor((elapsed % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                const minutes = Math.floor((elapsed % (1000 * 60 * 60)) / (1000 * 60));
-                const seconds = Math.floor((elapsed % (1000 * 60)) / 1000);
-                document.getElementById("months").innerText = `${months} Months`;
-                document.getElementById("days").innerText = `${days} Days`;
-                document.getElementById("hours").innerText = `${hours} Hours`;
-                document.getElementById("minutes").innerText = `${minutes} Minutes`;
-                document.getElementById("seconds").innerText = `${seconds} Seconds`;
-            }, 1000);
-        }
-    </script>
 </head>
 <body>
     <div class="content">
@@ -251,8 +193,79 @@
             </div>
         </div>
     </div>
+    <!-- Background Music -->
+    <audio id="background-music" autoplay loop>
+        <source src="starfire.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
     <script>
-        startCounter(); // Start the counter automatically
+        // Open Envelope Animation
+        function openEnvelope() {
+            let envelope = document.querySelector('.content');
+            let newContent = document.querySelector('.hidden-content');
+            envelope.style.animation = 'poof 1s forwards';
+            setTimeout(() => {
+                envelope.style.display = 'none';
+                newContent.style.display = 'flex';
+                document.body.style.backgroundImage = "url('bg3.jpg')"; // Change background image
+                gsap.to(".valentine-text", { duration: 2, opacity: 1, y: 20, ease: "power2.out" });
+                createHeartParticles();
+                document.getElementById('background-music').play(); // Start background music
+            }, 1000);
+        }
+
+        // Heart Particles Animation
+        function createHeartParticles() {
+            setInterval(() => {
+                let heart = document.createElement("img");
+                let heartImages = ["heart1.png", "heart2.png", "heart3.png", "heart4.png", "heart5.png"];
+                heart.src = heartImages[Math.floor(Math.random() * heartImages.length)];
+                heart.classList.add("heart-particle");
+                heart.style.left = Math.random() * 100 + "vw";
+                heart.style.top = "100vh";
+                heart.style.animationDuration = (Math.random() * 4 + 6) + "s";
+                document.querySelector('.hidden-content').appendChild(heart);
+                setTimeout(() => { heart.remove(); }, 10000);
+            }, 300);
+        }
+
+        // Dropdown Logic
+        function toggleDropdown(element) {
+            const details = element.querySelector('.counter-details, .love-meter-details');
+            const allDetails = document.querySelectorAll('.counter-details, .love-meter-details');
+            
+            // Close all other dropdowns
+            allDetails.forEach((detail) => {
+                if (detail !== details) {
+                    detail.style.display = 'none';
+                }
+            });
+            
+            // Toggle the clicked dropdown
+            details.style.display = details.style.display === 'block' ? 'none' : 'block';
+        }
+
+        // Time Counter Logic
+        function startCounter() {
+            const startTime = new Date("September 9, 2024 14:31:00").getTime();
+            setInterval(() => {
+                const now = new Date().getTime();
+                const elapsed = now - startTime;
+                const months = Math.floor(elapsed / (1000 * 60 * 60 * 24 * 30));
+                const days = Math.floor((elapsed % (1000 * 60 * 60 * 24 * 30)) / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((elapsed % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((elapsed % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((elapsed % (1000 * 60)) / 1000);
+                document.getElementById("months").innerText = `${months} Months`;
+                document.getElementById("days").innerText = `${days} Days`;
+                document.getElementById("hours").innerText = `${hours} Hours`;
+                document.getElementById("minutes").innerText = `${minutes} Minutes`;
+                document.getElementById("seconds").innerText = `${seconds} Seconds`;
+            }, 1000);
+        }
+
+        // Start the counter automatically
+        startCounter();
     </script>
 </body>
 </html>
